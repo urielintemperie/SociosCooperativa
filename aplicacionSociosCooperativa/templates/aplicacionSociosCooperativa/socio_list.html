@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	
+	<style>
+		th {
+			background-color: #006600;
+			color: white;
+			text-align:center;
+			}
+			tr:nth-child(even) {background-color: #f2f2f2}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">
+					Socios de la Cooperativa
+				</a>
+					<a href="{% url 'aplicacionSociosCooperativa.views.socio_list'%}"><button type="button" class="btn btn-default navbar-btn">Socios</button></a>
+					<a href="{% url 'aplicacionSociosCooperativa.views.importe_list'%}"><button type="button" class="btn btn-default navbar-btn">Importes</button></a>
+					<a href="{% url 'aplicacionSociosCooperativa.views.pago_list'%}"><button type="button" class="btn btn-default navbar-btn">Pago</button></a>
+				<!--<form action="." method="GET">
+					<label for="q">Search: </label>
+					<input type="text" name="q" value="{{ query|escape }}">
+					<input type="submit" value="Search">
+				</form>-->
+				<form class="navbar-form navbar-left" role="search" action="{% url 'aplicacionSociosCooperativa.views.search' %}" method="GET">
+					<input name="q" value="{{ query|escape }}" type="text" class="form-control" placeholder="Filtrar">
+					<input type="submit" value="Buscar" class="btn btn-default">
+				</form>
+				<!--
+				<form class="navbar-form navbar-left" role="search" action="localhos" action="">
+					<div class="form-group">
+						<input name="criterio" type="text" class="form-control" placeholder="Filtrar">
+					</div>
+					<button type="submit" class="btn btn-default">Filtrar</button>
+				</form>
+				-->
+			</div>
+		</div>
+	</nav>
+	<h1 style="display:inline">Socios</h1>
+	<a href="{% url 'aplicacionSociosCooperativa.views.nuevoSocio' %}"><button type="button" class="btn btn-default" style="margin:5px">Agregar Socio</button></a>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Documento</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Correo</th>
+				<th>Curso</th>
+				<th>FechaInsc</th>
+				<th>SocioCompleto</th>
+				<!--<th>Pagos</th>-->
+				<th>UsuarioCampus</th>
+				<th>Especialidad</th>
+				<th>FechaNacimiento</th>
+				<th>Eliminar</th>
+				<th>Editar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--
+			<tr>
+				
+				<td>41080962</td>
+				<td>Sofia</td>
+				<td>Zarate</td>
+				<td>chofi.1998@gmail.com</td>
+				<td>7º</td>
+				<td>19/4/16</td>
+				<td>Incompleto</td>
+				<td>2</td>
+				<td></td>
+				<td>Informatica</td>
+				<td>27/4/98</td>
+				<td><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+				<td><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></button></td>
+			</tr>
+			-->
+			
+			{% for socio in socios%}
+			<tr>
+				<td>{{socio.documento}}</td>
+				<td>{{socio.nombre}}</td>
+				<td>{{socio.apellido}}</td>
+				<td>{{socio.correo}}</td>
+				<td>{{socio.curso}}</td>
+				<td>{{socio.fechaInscripcion}}</td>
+				
+				{% if socio.socioCompleto == 1 %}
+					<td>Completo</td>
+				{% else %}
+					<td>Incompleto</td>
+				{% endif %}
+				<!--<td>{{socio.socioCompleto}}</td>-->
+				<!--<td>{{socio.pagos.pago}}</td>-->
+				<td>{{socio.usuarioCampus}}</td>
+				
+				{% if socio.epecialidad == 1 %}
+					<td>Informatica</td>
+				{% elif socio.epecialidad == 2 %}
+					<td>Electronica</td>
+				{% else %}
+					<td>Ninguna</td>
+				{% endif %}
+				<!--<td>{{socio.epecialidad}}</td>-->
+				<td>{{socio.fechaNacimiento}}</td>
+				<td><a href="{% url 'socioEliminar' pk=socio.pk %}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></a></td>
+				<td><a href="{% url 'socioEditar' pk=socio.pk %}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+			</tr>
+			{% endfor %}
+			<!--
+			{% for pago in pagos%}
+			<tr>
+				<td>{{pago.fecha}}</td>
+				<td>{{pago.pago}}</td>
+				
+				<td><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+				<td><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></button></td>
+			</tr>
+			{% endfor %}
+			-->
+		</tbody>
+	</table>
+</body>

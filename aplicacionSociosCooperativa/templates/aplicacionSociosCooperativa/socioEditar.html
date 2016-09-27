@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">
+					Socios de la Cooperativa
+				</a>
+					<a href="{% url 'aplicacionSociosCooperativa.views.socio_list'%}"><button type="button" class="btn btn-default navbar-btn">Socios</button></a>
+					<a href="{% url 'aplicacionSociosCooperativa.views.importe_list'%}"><button type="button" class="btn btn-default navbar-btn">Importes</button></a>
+					<a href="{% url 'aplicacionSociosCooperativa.views.pago_list'%}"><button type="button" class="btn btn-default navbar-btn">Pago</button></a>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Filtrar">
+					</div>
+					<button type="submit" class="btn btn-default">Filtrar</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+	<h1 style="display:inline">Editar Socio</h1>
+	
+	{% block content %}
+	
+	<form method="POST" class="SocioForm">{% csrf_token %}
+	    {{ form.as_p }}
+	    <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+{% endblock %}
+</body>
